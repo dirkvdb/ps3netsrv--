@@ -537,7 +537,7 @@ public:
             try
             {
                 auto client = std::make_shared<Ps3Client>(m_rootPath, m_Socket.accept());
-                auto task = std::thread([&client] () { client->run(); });
+                auto task = std::thread([client] () { client->run(); });
                 log::info("Connection from %", client->getAddress());
                 task.detach();
             }
