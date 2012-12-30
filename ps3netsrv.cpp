@@ -536,9 +536,7 @@ public:
         {
             try
             {
-                m_Clients.push_back(std::make_unique<Ps3Client>(m_rootPath, m_Socket.accept()));
-                Ps3Client* client = m_Clients.back().get();
-                
+                auto client = std::make_shared<Ps3Client>(m_rootPath, m_Socket.accept());
                 auto task = std::thread([&client] () { client->run(); });
                 log::info("Connection from %", client->getAddress());
                 task.detach();
@@ -551,9 +549,9 @@ public:
     }
 
 private:
-    std::string                                 m_rootPath;
-    Socket                                      m_Socket;
-    std::vector<std::unique_ptr<Ps3Client>>     m_Clients;
+    std::string     m_rootPath;
+    Socket          m_Socket;
+
 };
 
 void usage(const std::string& execName)
