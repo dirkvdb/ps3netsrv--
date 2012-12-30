@@ -1,0 +1,270 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43D6114F1690AC6600A9767E /* ps3netsrv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43D6114E1690AC6600A9767E /* ps3netsrv.cpp */; };
+		43D6115B1690AC9800A9767E /* libUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D611581690AC8300A9767E /* libUtils.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		43D611571690AC8300A9767E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43D611501690AC8300A9767E /* Utils.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4336380A1562DE440018D554;
+			remoteInfo = Utils;
+		};
+		43D611591690AC9200A9767E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43D611501690AC8300A9767E /* Utils.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 433638091562DE440018D554;
+			remoteInfo = Utils;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		43DC80571690AB530068AC97 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		43D6114E1690AC6600A9767E /* ps3netsrv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ps3netsrv.cpp; sourceTree = SOURCE_ROOT; };
+		43D611501690AC8300A9767E /* Utils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Utils.xcodeproj; path = utils/Utils.xcodeproj; sourceTree = "<group>"; };
+		43DC80591690AB530068AC97 /* ps3netsrv */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ps3netsrv; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43DC80561690AB530068AC97 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43D6115B1690AC9800A9767E /* libUtils.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43D611511690AC8300A9767E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43D611581690AC8300A9767E /* libUtils.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43DC804E1690AB530068AC97 = {
+			isa = PBXGroup;
+			children = (
+				43D611501690AC8300A9767E /* Utils.xcodeproj */,
+				43DC805C1690AB530068AC97 /* ps3netsrv */,
+				43DC805A1690AB530068AC97 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43DC805A1690AB530068AC97 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43DC80591690AB530068AC97 /* ps3netsrv */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43DC805C1690AB530068AC97 /* ps3netsrv */ = {
+			isa = PBXGroup;
+			children = (
+				43D6114E1690AC6600A9767E /* ps3netsrv.cpp */,
+			);
+			path = ps3netsrv;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		43DC80581690AB530068AC97 /* ps3netsrv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43DC80631690AB530068AC97 /* Build configuration list for PBXNativeTarget "ps3netsrv" */;
+			buildPhases = (
+				43DC80551690AB530068AC97 /* Sources */,
+				43DC80561690AB530068AC97 /* Frameworks */,
+				43DC80571690AB530068AC97 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				43D6115A1690AC9200A9767E /* PBXTargetDependency */,
+			);
+			name = ps3netsrv;
+			productName = ps3netsrv;
+			productReference = 43DC80591690AB530068AC97 /* ps3netsrv */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43DC80501690AB530068AC97 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Dirk Vanden Boer";
+			};
+			buildConfigurationList = 43DC80531690AB530068AC97 /* Build configuration list for PBXProject "ps3netsrv" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43DC804E1690AB530068AC97;
+			productRefGroup = 43DC805A1690AB530068AC97 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 43D611511690AC8300A9767E /* Products */;
+					ProjectRef = 43D611501690AC8300A9767E /* Utils.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				43DC80581690AB530068AC97 /* ps3netsrv */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		43D611581690AC8300A9767E /* libUtils.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUtils.a;
+			remoteRef = 43D611571690AC8300A9767E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43DC80551690AB530068AC97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43D6114F1690AC6600A9767E /* ps3netsrv.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		43D6115A1690AC9200A9767E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Utils;
+			targetProxy = 43D611591690AC9200A9767E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		43DC80611690AB530068AC97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43DC80621690AB530068AC97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		43DC80641690AB530068AC97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/utils/inc";
+			};
+			name = Debug;
+		};
+		43DC80651690AB530068AC97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/utils/inc";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43DC80531690AB530068AC97 /* Build configuration list for PBXProject "ps3netsrv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43DC80611690AB530068AC97 /* Debug */,
+				43DC80621690AB530068AC97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43DC80631690AB530068AC97 /* Build configuration list for PBXNativeTarget "ps3netsrv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43DC80641690AB530068AC97 /* Debug */,
+				43DC80651690AB530068AC97 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43DC80501690AB530068AC97 /* Project object */;
+}

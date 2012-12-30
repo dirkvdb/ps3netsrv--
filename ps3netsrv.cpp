@@ -15,8 +15,9 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#include "utils/fileoperations.h"
+#include "utils/log.h"
 #include "utils/socket.h"
+#include "utils/fileoperations.h"
 
 #define DEFAULT_PORT 38008
 #define LOWEST_PORT 1024
@@ -137,7 +138,7 @@ public:
         }
         catch (std::exception& e)
         {
-            std::cerr << e.what() << std::endl;
+            log::error(e.what());
         }
 
         m_Socket.write(&reply, sizeof(reply));
@@ -159,7 +160,7 @@ public:
         }
         catch (std::exception& e)
         {
-            std::cerr << e.what() << std::endl;
+            log::error(e.what());
             reply.size = -1;
         }
         
@@ -186,7 +187,7 @@ public:
 
     void customReadFile()
     {
-        std::cout << __FUNCTION__ << std::endl;
+        log::debug(__FUNCTION__);
 
         throwOnBadReadFile();
         uint64_t offset = 2352 * m_Command.count;
@@ -208,7 +209,7 @@ public:
 
         m_Socket.write(m_Buffer.data(), chunks * m_ChunkSize);
 
-        std::cout << __FUNCTION__ << " done" << std::endl;
+        log::debug("% done", __FUNCTION__);
     }
 
     void readShortFile()
@@ -265,7 +266,7 @@ public:
 
     void openDirectory()
     {
-        std::cout << __FUNCTION__ << std::endl;
+        log::debug(__FUNCTION__);
         
         filesystemOperation([this] () {
             m_Directory = std::make_unique<fileops::Directory>(readFilePath());
@@ -273,7 +274,7 @@ public:
             writeSuccessReply();
         });
         
-        std::cout << __FUNCTION__ << " done" << std::endl;
+        log::debug("% done", __FUNCTION__);
     }
 
     void makeDirectory()
@@ -301,7 +302,7 @@ public:
 
     void listDirectoryEntryShort()
     {
-        std::cout << __FUNCTION__ << std::endl;
+        log::debug(__FUNCTION__);
         
         if (!m_Directory)
         {
@@ -333,7 +334,7 @@ public:
         }
         catch (std::logic_error& e)
         {
-            std::cerr << e.what() << std::endl;
+            log::error(e.what());
 
             FileReplyShort reply;
             reply.size = htonll(-1LL);
@@ -342,7 +343,7 @@ public:
 
         ++m_DirIterator;
         
-        std::cout << __FUNCTION__ << " done" << std::endl;
+        log::debug("% done", __FUNCTION__);
     }
 
     void listDirectoryEntryLong()
@@ -382,7 +383,7 @@ public:
         }
         catch (std::logic_error& e)
         {
-            std::cerr << e.what() << std::endl;
+            log::error(e.what());
 
             FileReplyLong reply;
             reply.size = htonll(-1LL);
@@ -399,7 +400,9 @@ public:
             for (;;)
             {
                 if (m_Socket.read(&m_Command, sizeof(m_Command)) != sizeof(m_Command))
+                {
                     break;
+                }
                 
                 m_Command.code    = ntohs(m_Command.code);
                 m_Command.size    = ntohs(m_Command.size);
@@ -408,23 +411,22 @@ public:
 
                 switch (static_cast<CommandCode>(m_Command.code))
                 {
-                case CommandCode::OpenFileForReading:       openFileForReading();                           break;
-                case CommandCode::ReadFile:                 readFile();                                     break;
-                case CommandCode::CustomReadFile:           customReadFile();                               break;
-                case CommandCode::ReadShortFile:            readShortFile();                                break;
-                case CommandCode::OpenFileForWriting:       openFileForWriting();                           break;
-                case CommandCode::WriteToFile:              writeToFile();                                  break;
-                case CommandCode::OpenDirectory:            openDirectory();                                break;
-                case CommandCode::ListDirectoryEntryShort:  listDirectoryEntryShort();                      break;
-                case CommandCode::DeleteFile:               deleteFile();                                   break;
-                case CommandCode::MakeDirectory:            makeDirectory();                                break;
-                case CommandCode::RemoveDirectory:          removeDirectory();                              break;
-                case CommandCode::ListDirectoryEntryLong:   listDirectoryEntryLong();                       break;
-                case CommandCode::GetFileStats:             getFileStats();                                 break;
-                case CommandCode::GetDirectorySize:         getDirectorySize();                             break;
+                case CommandCode::OpenFileForReading:       openFileForReading();           break;
+                case CommandCode::ReadFile:                 readFile();                     break;
+                case CommandCode::CustomReadFile:           customReadFile();               break;
+                case CommandCode::ReadShortFile:            readShortFile();                break;
+                case CommandCode::OpenFileForWriting:       openFileForWriting();           break;
+                case CommandCode::WriteToFile:              writeToFile();                  break;
+                case CommandCode::OpenDirectory:            openDirectory();                break;
+                case CommandCode::ListDirectoryEntryShort:  listDirectoryEntryShort();      break;
+                case CommandCode::DeleteFile:               deleteFile();                   break;
+                case CommandCode::MakeDirectory:            makeDirectory();                break;
+                case CommandCode::RemoveDirectory:          removeDirectory();              break;
+                case CommandCode::ListDirectoryEntryLong:   listDirectoryEntryLong();       break;
+                case CommandCode::GetFileStats:             getFileStats();                 break;
+                case CommandCode::GetDirectorySize:         getDirectorySize();             break;
                 default:
-                    std::cerr << "Unknown command: " << std::hex << m_Command.code << std::endl;
-                    throw std::logic_error("Unknown command");
+                    throw std::logic_error(stringops::format("Unknown command: ", m_Command.code));
                     break;
                 }
             }
@@ -432,7 +434,7 @@ public:
         catch (std::exception& e)
         {
             m_Socket.close();
-            std::cerr << e.what() << std::endl;
+            log::error(e.what());
         }
     }
 
@@ -466,7 +468,7 @@ private:
         }
         catch (std::exception& e)
         {
-            std::cerr << e.what() << std::endl;
+            log::error(e.what());
             writeFailureReply();
         }
     }
@@ -529,7 +531,7 @@ public:
 
     void run()
     {
-        std::cout << "Waiting for client..." << std::endl;
+        log::info("Waiting for client...");
         for (;;)
         {
             try
@@ -538,12 +540,12 @@ public:
                 Ps3Client* client = m_Clients.back().get();
                 
                 auto task = std::thread([&client] () { client->run(); });
-                std::cout << "Connection from " << client->getAddress() << std::endl;
+                log::info("Connection from %", client->getAddress());
                 task.detach();
             }
             catch (std::exception& e)
             {
-                std::cerr << "Failed to create client: " << e.what() << std::endl;
+                log::error("Failed to create client: %", e.what());
             }
         }
     }
@@ -577,9 +579,6 @@ int main(int argc, char *argv[])
     {
         switch (opt)
         {
-        case '\x01':
-            std::cout << "optarg=" << optarg << std::endl;
-            break;
         case 'd':
             daemonize = true;
             break;
@@ -587,7 +586,7 @@ int main(int argc, char *argv[])
             port = std::stoi(optarg);
             if (port < LOWEST_PORT || port > 65535)
             {
-                std::cerr << "Port must be in " << LOWEST_PORT << "-65535 range." << std::endl;
+                log::error("Port must be in %-65535 range.", LOWEST_PORT);
                 return -1;
             }
             break;
@@ -599,10 +598,10 @@ int main(int argc, char *argv[])
 
     if (daemonize)
     {
-        pid_t pid{fork()};
+        pid_t pid = fork();
         if (pid < 0)
         {
-            std::cerr << "Unable to daemonize." << std::endl;
+            log::error("Unable to daemonize.");
             return -1;
         }
 
@@ -613,10 +612,10 @@ int main(int argc, char *argv[])
 
         umask(0);
 
-        pid_t sid{setsid()};
+        pid_t sid = setsid();
         if (sid < 0)
         {
-            std::cerr << "Failed to get session id." << std::endl;
+            log::error("Failed to get session id");
             return -1;   
         }
 
@@ -633,16 +632,23 @@ int main(int argc, char *argv[])
         }
     }
 
-    setSignalHandlers();
-    utils::fileops::changeDirectory(argv[optind]);
-
-    Ps3Server server(argv[optind], port);
-    server.run();
+    try
+    {
+        setSignalHandlers();
+        utils::fileops::changeDirectory(argv[optind]);
+        
+        Ps3Server server(argv[optind], port);
+        server.run();
+    }
+    catch (std::exception& e)
+    {
+        log::error(e.what());
+    }    
 }
 
 static void sigterm(int signo)
 {
-    std::cout << "Terminated" << std::endl;
+    log::info("Terminated");
     exit(1);
 }
 
@@ -658,9 +664,7 @@ static bool setSignalHandlers()
 
     if (sigaction(SIGINT, &sa, nullptr) < 0)
     {
-        std::stringstream ss;
-        ss << "Can't catch SIGINT: " << strerror(errno) << std::endl;
-        throw std::logic_error(ss.str().c_str());
+        throw std::logic_error(stringops::format("Can't catch SIGINT: %", strerror(errno)));
     }
 
     sa.sa_flags = 0;
@@ -671,9 +675,7 @@ static bool setSignalHandlers()
 
     if (sigaction(SIGQUIT, &sa, nullptr) < 0)
     {
-        std::stringstream ss;
-        ss << "Can't catch SIGQUIT: " << strerror(errno) << std::endl;
-        throw std::logic_error(ss.str().c_str());
+        throw std::logic_error(stringops::format("Can't catch SIGQUIT: %", strerror(errno)));
     }
 
     sa.sa_handler = sigterm;
@@ -684,9 +686,7 @@ static bool setSignalHandlers()
 
     if (sigaction(SIGTERM, &sa, nullptr) < 0)
     {
-        std::stringstream ss;
-        ss << "Can't catch SIGTERM: " << strerror(errno) << std::endl;
-        throw std::logic_error(ss.str().c_str());
+        throw std::logic_error(stringops::format("Can't catch SIGTERM: %", strerror(errno)));
     }
 
     return true;
