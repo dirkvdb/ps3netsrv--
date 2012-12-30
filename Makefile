@@ -1,8 +1,11 @@
-CXXFLAGS = -O3 -I./utils/inc -D_FILE_OFFSET_BITS=64 -Wall -std=c++11 -stdlib=libc++ -stdlib=libc++ -Wfatal-errors
-
+CXXFLAGS = -O3 -I./utils/inc -D_FILE_OFFSET_BITS=64 -Wall -std=c++11 -Wfatal-errors
 CXX = clang++
-LD = clang++
+LD = $(CXX)
 LIBS=-lpthread
+
+ifeq ($(CXX),clang++)
+	CXXFLAGS := $(CXXFLAGS) -stdlib=libc++
+endif
 
 all: ps3netsrv++
 
