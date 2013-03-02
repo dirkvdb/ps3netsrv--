@@ -209,7 +209,7 @@ public:
 
         m_Socket.write(m_Buffer.data(), chunks * m_ChunkSize);
 
-        log::debug("% done", __FUNCTION__);
+        log::debug("%s done", __FUNCTION__);
     }
 
     void readShortFile()
@@ -274,7 +274,7 @@ public:
             writeSuccessReply();
         });
         
-        log::debug("% done", __FUNCTION__);
+        log::debug("%s done", __FUNCTION__);
     }
 
     void makeDirectory()
@@ -343,7 +343,7 @@ public:
 
         ++m_DirIterator;
         
-        log::debug("% done", __FUNCTION__);
+        log::debug("%s done", __FUNCTION__);
     }
 
     void listDirectoryEntryLong()
@@ -538,12 +538,12 @@ public:
             {
                 auto client = std::make_shared<Ps3Client>(m_rootPath, m_Socket.accept());
                 auto task = std::thread([client] () { client->run(); });
-                log::info("Connection from %", client->getAddress());
+                log::info("Connection from %s", client->getAddress());
                 task.detach();
             }
             catch (std::exception& e)
             {
-                log::error("Failed to create client: %", e.what());
+                log::error("Failed to create client: %s", e.what());
             }
         }
     }
@@ -584,7 +584,7 @@ int main(int argc, char *argv[])
             port = std::stoi(optarg);
             if (port < LOWEST_PORT || port > 65535)
             {
-                log::error("Port must be in %-65535 range.", LOWEST_PORT);
+                log::error("Port must be in %d-65535 range.", LOWEST_PORT);
                 return -1;
             }
             break;
