@@ -10,6 +10,7 @@ Supported platforms:
 Build the source:
 ```
 git clone --recursive git://github.com/dirkvdb/ps3netsrv--.git
+git submodule update --init
 make
 ```
 
