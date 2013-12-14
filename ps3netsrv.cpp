@@ -426,7 +426,7 @@ public:
                 case CommandCode::GetFileStats:             getFileStats();                 break;
                 case CommandCode::GetDirectorySize:         getDirectorySize();             break;
                 default:
-                    throw std::logic_error(stringops::format("Unknown command: ", m_Command.code));
+                    throw std::logic_error(stringops::format("Unknown command: %d", m_Command.code));
                     break;
                 }
             }
@@ -537,8 +537,8 @@ public:
             try
             {
                 auto client = std::make_shared<Ps3Client>(m_rootPath, m_Socket.accept());
-                auto task = std::thread([client] () { client->run(); });
                 log::info("Connection from %s", client->getAddress());
+                auto task = std::thread([client] () { client->run(); });
                 task.detach();
             }
             catch (std::exception& e)
