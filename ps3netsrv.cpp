@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <cinttypes>
 #include <csignal>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <type_traits>
@@ -64,7 +65,8 @@ enum class CommandCode
     RemoveDirectory         = 0x122e,
     ListDirectoryEntryLong  = 0x122f,
     GetFileStats            = 0x1230,
-    GetDirectorySize        = 0x1231
+    GetDirectorySize        = 0x1231,
+    GetDirectoryContents    = 0x1232,
 };
 
 struct Command
@@ -77,7 +79,7 @@ struct Command
 
 struct FileReply
 {
-    uint64_t size;
+    int64_t  size;
     uint64_t mtime;
     uint64_t ctime;
     uint64_t atime;
@@ -86,19 +88,32 @@ struct FileReply
 
 struct FileReplyShort
 {
-    uint64_t size;
+    int64_t  size;
     uint16_t nameLength;
     uint8_t  isDirectory;
 } __attribute__((packed));
 
 struct FileReplyLong
 {
-    uint64_t size;
+    int64_t  size;
     uint64_t mtime;
     uint64_t ctime;
     uint64_t atime;
     uint16_t nameLength;
     uint8_t  isDirectory;
+} __attribute__((packed));
+
+struct ReadDirectoryReply
+{
+    int64_t  size;
+} __attribute__((packed));
+
+struct ReadDirectoryDataReply
+{
+    int64_t  size = 0;
+    uint64_t mtime = 0;
+    uint8_t  isDirectory = 0;
+    char     name[512];
 } __attribute__((packed));
 
 class Ps3Client
@@ -299,6 +314,50 @@ public:
             writeNumeric(htonll(fileops::calculateDirectorySize(readFilePath())));
         });
     }
+    
+    void getDirectoryContents()
+    {
+        if (!m_Directory)
+        {
+            throw std::logic_error("No directory was opened before listing request");
+        }
+    
+        try
+        {
+            ReadDirectoryReply reply;
+            memset(&reply, 0, sizeof(reply));
+            
+            std::vector<ReadDirectoryDataReply> dirItems;
+            
+            for (auto& entry : *m_Directory)
+            {
+                ReadDirectoryDataReply data;
+                data.isDirectory    = (m_DirIterator->type() == fileops::FileSystemEntryType::Directory) ? 1 : 0;
+                data.size           = htonll(data.isDirectory == 1 ? 0 : fileops::getFileSize(entry.path()));
+                
+                auto name = fileops::getFileName(entry.path());
+                strcpy(data.name, name.c_str());
+                
+                dirItems.push_back(data);
+            }
+
+            reply.size = htonll(dirItems.size());
+            m_Socket.write(&reply, sizeof(reply));
+            
+            if (!dirItems.empty())
+            {
+                m_Socket.write(dirItems.data(), dirItems.size() * sizeof(ReadDirectoryDataReply));
+            }
+        }
+        catch (std::logic_error& e)
+        {
+            log::error(e.what());
+
+            ReadDirectoryReply reply;
+            reply.size = htonll(0);
+            m_Socket.write(&reply, sizeof(ReadDirectoryReply));
+        }
+    }
 
     void listDirectoryEntryShort()
     {
@@ -425,6 +484,7 @@ public:
                 case CommandCode::ListDirectoryEntryLong:   listDirectoryEntryLong();       break;
                 case CommandCode::GetFileStats:             getFileStats();                 break;
                 case CommandCode::GetDirectorySize:         getDirectorySize();             break;
+                case CommandCode::GetDirectoryContents:     getDirectoryContents();         break;
                 default:
                     throw std::logic_error(stringops::format("Unknown command: %d", m_Command.code));
                     break;
