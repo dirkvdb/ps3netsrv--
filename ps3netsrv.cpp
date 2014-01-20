@@ -206,7 +206,7 @@ public:
 
         throwOnBadReadFile();
         uint64_t offset = 2352 * m_Command.count;
-        uint32_t chunks = *reinterpret_cast<uint32_t*>((&m_Command.offset) + sizeof(uint32_t));
+        uint32_t chunks = m_Command.offset >> 32;
 
         if ((chunks * m_ChunkSize) > m_BufferSize)
         {
