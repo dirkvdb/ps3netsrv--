@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C475FE8F-A558-4BF2-AC7B-932B24D61294</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ps3netsrv</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7A53F4C5-D801-4150-B59D-6F56069B074E</key>
+		<string>https://bitbucket.org/dirk_vdb/utils.git</string>
+		<key>B7EFF06D-9426-4D78-921B-CB87527DFD94</key>
+		<string>https://github.com/dirkvdb/ps3netsrv--.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ps3netsrv.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7A53F4C5-D801-4150-B59D-6F56069B074E</key>
+		<string>../../utils</string>
+		<key>B7EFF06D-9426-4D78-921B-CB87527DFD94</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dirkvdb/ps3netsrv--.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B7EFF06D-9426-4D78-921B-CB87527DFD94</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B7EFF06D-9426-4D78-921B-CB87527DFD94</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ps3netsrv--</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7A53F4C5-D801-4150-B59D-6F56069B074E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>utils</string>
+		</dict>
+	</array>
+</dict>
+</plist>
