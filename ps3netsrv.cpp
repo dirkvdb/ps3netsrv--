@@ -27,6 +27,7 @@ static bool setSignalHandlers();
 
 using namespace utils;
 
+#ifndef __APPLE__
 uint64_t htonll(uint64_t val)
 {
 #if __BYTE_ORDER == __LITTLE_ENDIAN
@@ -35,11 +36,14 @@ uint64_t htonll(uint64_t val)
     return val;
 #endif
 }
+#endif
 
+#ifndef __APPLE__
 uint64_t ntohll(uint64_t val)
 {
     return htonll(val);
 }
+#endif
 
 namespace std
 {
