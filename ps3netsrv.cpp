@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <cinttypes>
 #include <csignal>
+#include <string>
 #include <cstring>
 #include <fstream>
 #include <iostream>
